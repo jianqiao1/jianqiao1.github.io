@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on My New Hugo Site</title>
+    <title>Posts on yyer</title>
     <link>https://jianqiao1.github.io/post/</link>
-    <description>Recent content in Posts on My New Hugo Site</description>
+    <description>Recent content in Posts on yyer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Jul 2020 09:51:11 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 21 Jul 2020 16:59:50 +0800</lastBuildDate>
     
 	<atom:link href="https://jianqiao1.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>递归解法</title>
+      <link>https://jianqiao1.github.io/post/%E9%80%92%E5%BD%92/</link>
+      <pubDate>Tue, 21 Jul 2020 16:59:50 +0800</pubDate>
+      
+      <guid>https://jianqiao1.github.io/post/%E9%80%92%E5%BD%92/</guid>
+      <description>力扣 21.合并两个有序链表
+将两个升序链表合并为一个新的升序链表并返回，新链表是通过拼接给定的两个链表的所有节点组成的。
+示例：
+输入：1-&amp;gt;2-&amp;gt;4, 1-&amp;gt;3-&amp;gt;4
+输出：1-&amp;gt;1-&amp;gt;2-&amp;gt;3-&amp;gt;4-&amp;gt;4  /** * Definition for singly-linked list. * struct ListNode { * int val; * ListNode *next; * ListNode() : val(0), next(nullptr) {} * ListNode(int x) : val(x), next(nullptr) {} * ListNode(int x, ListNode *next) : val(x), next(next) {} * }; */ class Solution { public: ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) { if(l1==NULL) return l2; if(l2==NULL) return l1; if(l1-&amp;gt;val&amp;lt;=l2-&amp;gt;val){ l1-&amp;gt;next=mergeTwoLists(l1-&amp;gt;next,l2); return l1; } l2-&amp;gt;next=mergeTwoLists(l1,l2-&amp;gt;next); return l2; } };   力扣 344.</description>
+    </item>
     
     <item>
       <title>Spring Boot实战合集</title>
