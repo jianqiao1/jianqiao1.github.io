@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>A1047 // yyer</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.74.2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="John Doe" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://jianqiao1.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="A1047"/>
+<meta name="twitter:description" content="1074 Reversing Linked List   题目大意：输入：第一行输入三个值，给定第一个节点的地址addr、链表总节点的个数n、k值,其中k值表示原链表每k个翻转，不满k个不翻转。
+第2行到第1&#43;n行为链表每一个节点的地址，节点对应的数值，节点的下一个节点地址。
+输出：输出翻转后的链表，共有n行，每行要输出的内容为当前节点的地址、当前节点的数值、下一个节点的地址。
+   解题思路：
+题目需要我们先按照每个节点对应的地址以及它的下一个节点的地址作为索引，将每一个节点一个接一个链接起来，然后每k个节点翻转，若剩下的节点不满k个就不翻转。由于题目将地址作为节点的索引，我们顺其自然就可以想到用struct结构体，其中有三个变量：节点的地址、节点的数值、节点的下一个节点地址。这里当我们存结构体信息时，直接将当前节点的地址作为结构体变量的索引，即addr;然后依次存入node[addr].data和node[addr].next，这里可能会有疑惑：如果直接将addr作为结构体变量的索引，那如何得到node[addr].addr,其实我们知道node[addr].addr=addr,那我们可以写一个初始化函数，令node[i].addr=i,这样就解决了前面的问题。
+第二个问题就是题目要求当节点排好后还要以每k个节点翻转，那我们可以定义一个vector数组，借助reverse函数进行反转。这里开始从来就没想过还可以定义vector&lt;Node&gt;形式数组，因为在代码里我们已经定义了一个struct Node{};形式的数据类型。这样就很好做了，接下来我们要知道怎么依据当前节点地址和下一个节点地址来排好节点并存入vector数组中，我们先从题目给定的第一个节点的地址p入手，将该节点存入vector，然后将当前节点的下一个节点地址赋值给p，结束条件是p==-1,这样我们就存入了最初的节点排序。
+这里由于输入数据太多容易输错，就用C&#43;&#43;文件读写操作将输入输出数据分别存入不同文件中。
+   代码
+ #include &lt;iostream&gt;#include &lt;cstdio&gt;#include &lt;vector&gt;#include &lt;algorithm&gt;#include &lt;fstream&gt;#include &lt;iomanip&gt;using namespace std; const int maxn=1e5&#43;5; struct Node{ int addr,data,next; }node[maxn]; void init(){ for(int i=0;i&lt;maxn;i&#43;&#43;) node[i].addr=i; } int main(){ ifstream infile; ofstream outfile; infile.open(&#34;C:\\Users\\jianqiao\\Desktop\\a.txt&#34;,ios::in); if(!infile.is_open()) cout&lt;&lt;&#34;Open file failure&#34;&lt;&lt;endl; int head,len,k,addr; vector&lt;Node&gt; vec; //cin&gt;&gt;head&gt;&gt;len&gt;&gt;k; 	infile&gt;&gt;head&gt;&gt;len&gt;&gt;k; init(); /*for(int i=0;i&lt;len;i&#43;&#43;){ scanf(&#34;%d&#34;,&amp;addr); scanf(&#34;%d %d&#34;,&amp;node[addr].data,&amp;node[addr].next); }*/ while(0!"/>
+
+    <meta property="og:title" content="A1047" />
+<meta property="og:description" content="1074 Reversing Linked List   题目大意：输入：第一行输入三个值，给定第一个节点的地址addr、链表总节点的个数n、k值,其中k值表示原链表每k个翻转，不满k个不翻转。
+第2行到第1&#43;n行为链表每一个节点的地址，节点对应的数值，节点的下一个节点地址。
+输出：输出翻转后的链表，共有n行，每行要输出的内容为当前节点的地址、当前节点的数值、下一个节点的地址。
+   解题思路：
+题目需要我们先按照每个节点对应的地址以及它的下一个节点的地址作为索引，将每一个节点一个接一个链接起来，然后每k个节点翻转，若剩下的节点不满k个就不翻转。由于题目将地址作为节点的索引，我们顺其自然就可以想到用struct结构体，其中有三个变量：节点的地址、节点的数值、节点的下一个节点地址。这里当我们存结构体信息时，直接将当前节点的地址作为结构体变量的索引，即addr;然后依次存入node[addr].data和node[addr].next，这里可能会有疑惑：如果直接将addr作为结构体变量的索引，那如何得到node[addr].addr,其实我们知道node[addr].addr=addr,那我们可以写一个初始化函数，令node[i].addr=i,这样就解决了前面的问题。
+第二个问题就是题目要求当节点排好后还要以每k个节点翻转，那我们可以定义一个vector数组，借助reverse函数进行反转。这里开始从来就没想过还可以定义vector&lt;Node&gt;形式数组，因为在代码里我们已经定义了一个struct Node{};形式的数据类型。这样就很好做了，接下来我们要知道怎么依据当前节点地址和下一个节点地址来排好节点并存入vector数组中，我们先从题目给定的第一个节点的地址p入手，将该节点存入vector，然后将当前节点的下一个节点地址赋值给p，结束条件是p==-1,这样我们就存入了最初的节点排序。
+这里由于输入数据太多容易输错，就用C&#43;&#43;文件读写操作将输入输出数据分别存入不同文件中。
+   代码
+ #include &lt;iostream&gt;#include &lt;cstdio&gt;#include &lt;vector&gt;#include &lt;algorithm&gt;#include &lt;fstream&gt;#include &lt;iomanip&gt;using namespace std; const int maxn=1e5&#43;5; struct Node{ int addr,data,next; }node[maxn]; void init(){ for(int i=0;i&lt;maxn;i&#43;&#43;) node[i].addr=i; } int main(){ ifstream infile; ofstream outfile; infile.open(&#34;C:\\Users\\jianqiao\\Desktop\\a.txt&#34;,ios::in); if(!infile.is_open()) cout&lt;&lt;&#34;Open file failure&#34;&lt;&lt;endl; int head,len,k,addr; vector&lt;Node&gt; vec; //cin&gt;&gt;head&gt;&gt;len&gt;&gt;k; 	infile&gt;&gt;head&gt;&gt;len&gt;&gt;k; init(); /*for(int i=0;i&lt;len;i&#43;&#43;){ scanf(&#34;%d&#34;,&amp;addr); scanf(&#34;%d %d&#34;,&amp;node[addr].data,&amp;node[addr].next); }*/ while(0!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jianqiao1.github.io/post/a1047/" />
+<meta property="article:published_time" content="2020-08-09T23:46:47+08:00" />
+<meta property="article:modified_time" content="2020-08-09T23:46:47+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://jianqiao1.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="John Doe" /></a>
+      <h1>yyer</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vehicula turpis sit amet elit pretium.</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/jianqiao1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">A1047</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Aug 9, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      <ul>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805394512134144">1074 Reversing Linked List</a></li>
+</ul>
+<blockquote>
+<p><!-- raw HTML omitted -->题目大意：<!-- raw HTML omitted --><br>
+输入：第一行输入三个值，给定第一个节点的地址<code>addr</code>、链表总节点的个数<code>n</code>、<code>k</code>值,其中k值表示原链表每k个翻转，不满k个不翻转。<br>
+第2行到第1+n行为链表每一个节点的地址，节点对应的数值，节点的下一个节点地址。<br>
+输出：输出翻转后的链表，共有n行，每行要输出的内容为当前节点的地址、当前节点的数值、下一个节点的地址。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>解题思路：<br>
+题目需要我们先按照每个节点对应的地址以及它的下一个节点的地址作为索引，将每一个节点一个接一个链接起来，然后每k个节点翻转，若剩下的节点不满k个就不翻转。由于题目将地址作为节点的索引，我们顺其自然就可以想到用struct结构体，其中有三个变量：节点的地址、节点的数值、节点的下一个节点地址。这里当我们存结构体信息时，直接将当前节点的地址作为结构体变量的索引，即<code>addr</code>;然后依次存入<code>node[addr]</code>.<code>data和node[addr].next</code>，这里可能会有疑惑：如果直接将addr作为结构体变量的索引，那如何得到<code>node[addr].addr</code>,其实我们知道<code>node[addr].addr=addr</code>,那我们可以写一个初始化函数，令<code>node[i].addr=i</code>,这样就解决了前面的问题。<br>
+第二个问题就是题目要求当节点排好后还要以每k个节点翻转，那我们可以定义一个<code>vector</code>数组，借助<code>reverse</code>函数进行反转。这里开始从来就没想过还可以定义<code>vector&lt;Node&gt;</code>形式数组，因为在代码里我们已经定义了一个<code>struct Node{};</code>形式的数据类型。这样就很好做了，接下来我们要知道怎么依据当前节点地址和下一个节点地址来排好节点并存入vector数组中，我们先从题目给定的第一个节点的地址p入手，将该节点存入vector，然后将当前节点的下一个节点地址赋值给p，结束条件是p==-1,这样我们就存入了最初的节点排序。<br>
+这里由于输入数据太多容易输错，就用<a href="https://blog.csdn.net/qq_34097715/article/details/79970860">C++文件读写操作</a>将输入输出数据分别存入不同文件中。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>代码<br>
+<!-- raw HTML omitted --></p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdio&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fstream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iomanip&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> maxn<span style="color:#f92672">=</span><span style="color:#ae81ff">1e5</span><span style="color:#f92672">+</span><span style="color:#ae81ff">5</span>;
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Node</span>{
+	<span style="color:#66d9ef">int</span> addr,data,next;
+}node[maxn];
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">init</span>(){
+	<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>maxn;i<span style="color:#f92672">++</span>) node[i].addr<span style="color:#f92672">=</span>i;
+}
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+	ifstream infile;
+	ofstream outfile;
+	infile.open(<span style="color:#e6db74">&#34;C:</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">Users</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">jianqiao</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">Desktop</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">a.txt&#34;</span>,ios<span style="color:#f92672">::</span>in);
+	<span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>infile.is_open()) cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;Open file failure&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
+	<span style="color:#66d9ef">int</span> head,len,k,addr;
+	vector<span style="color:#f92672">&lt;</span>Node<span style="color:#f92672">&gt;</span> vec;
+	<span style="color:#75715e">//cin&gt;&gt;head&gt;&gt;len&gt;&gt;k;
+</span><span style="color:#75715e"></span>	infile<span style="color:#f92672">&gt;&gt;</span>head<span style="color:#f92672">&gt;&gt;</span>len<span style="color:#f92672">&gt;&gt;</span>k;
+	init();
+	<span style="color:#75715e">/*for(int i=0;i&lt;len;i++){
+</span><span style="color:#75715e">		scanf(&#34;%d&#34;,&amp;addr);
+</span><span style="color:#75715e">		scanf(&#34;%d %d&#34;,&amp;node[addr].data,&amp;node[addr].next);
+</span><span style="color:#75715e">	}*/</span>
+	<span style="color:#66d9ef">while</span>(<span style="color:#ae81ff">0</span><span style="color:#f92672">!=</span>len){
+		infile<span style="color:#f92672">&gt;&gt;</span>addr;
+		infile<span style="color:#f92672">&gt;&gt;</span>node[addr].data<span style="color:#f92672">&gt;&gt;</span>node[addr].next;
+		len<span style="color:#f92672">--</span>;
+	}
+	infile.close();
+	outfile.open(<span style="color:#e6db74">&#34;C:</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">Users</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">jianqiao</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">Desktop</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">b.txt&#34;</span>,ios<span style="color:#f92672">::</span>out);
+	<span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>outfile.is_open()) cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;Open file failure&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
+	<span style="color:#66d9ef">int</span> p<span style="color:#f92672">=</span>head;
+	<span style="color:#66d9ef">while</span>(p<span style="color:#f92672">!=-</span><span style="color:#ae81ff">1</span>){
+	   vec.push_back(node[p]);
+	   p<span style="color:#f92672">=</span>node[p].next;	
+	}
+	<span style="color:#66d9ef">int</span> time<span style="color:#f92672">=</span>vec.size()<span style="color:#f92672">/</span>k;
+	<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>time;i<span style="color:#f92672">++</span>){
+		reverse(vec.begin()<span style="color:#f92672">+</span>i<span style="color:#f92672">*</span>k,vec.begin()<span style="color:#f92672">+</span>i<span style="color:#f92672">*</span>k<span style="color:#f92672">+</span>k);
+	}
+	<span style="color:#75715e">/*for(int i=0;i&lt;vec.size();i++){
+</span><span style="color:#75715e">		printf(&#34;%05d %d&#34;,vec[i].addr,vec[i].data);
+</span><span style="color:#75715e">		if(vec[i].next==-1) printf(&#34; -1\n&#34;);
+</span><span style="color:#75715e">		else printf(&#34; %05d\n&#34;,vec[i+1].addr);
+</span><span style="color:#75715e">	}*/</span>
+	<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>vec.size();i<span style="color:#f92672">++</span>){
+		outfile<span style="color:#f92672">&lt;&lt;</span>setw(<span style="color:#ae81ff">5</span>)<span style="color:#f92672">&lt;&lt;</span>setfill(<span style="color:#e6db74">&#39;0&#39;</span>)<span style="color:#f92672">&lt;&lt;</span>vec[i].addr<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34; &#34;</span>;
+		outfile<span style="color:#f92672">&lt;&lt;</span>vec[i].data<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34; &#34;</span>;
+		<span style="color:#66d9ef">if</span>(i<span style="color:#f92672">!=</span>vec.size()<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) outfile<span style="color:#f92672">&lt;&lt;</span>setw(<span style="color:#ae81ff">5</span>)<span style="color:#f92672">&lt;&lt;</span>setfill(<span style="color:#e6db74">&#39;0&#39;</span>)<span style="color:#f92672">&lt;&lt;</span>vec[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>].addr<span style="color:#f92672">&lt;&lt;</span>endl;
+		<span style="color:#66d9ef">else</span> outfile<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;-1&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; 
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}  
+</code></pre></div><!-- raw HTML omitted -->
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

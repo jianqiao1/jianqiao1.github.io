@@ -6,10 +6,27 @@
     <description>Recent content on yyer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Jul 2020 16:59:50 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 09 Aug 2020 23:46:47 +0800</lastBuildDate>
     
 	<atom:link href="https://jianqiao1.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A1047</title>
+      <link>https://jianqiao1.github.io/post/a1047/</link>
+      <pubDate>Sun, 09 Aug 2020 23:46:47 +0800</pubDate>
+      
+      <guid>https://jianqiao1.github.io/post/a1047/</guid>
+      <description>1074 Reversing Linked List   题目大意：输入：第一行输入三个值，给定第一个节点的地址addr、链表总节点的个数n、k值,其中k值表示原链表每k个翻转，不满k个不翻转。
+第2行到第1+n行为链表每一个节点的地址，节点对应的数值，节点的下一个节点地址。
+输出：输出翻转后的链表，共有n行，每行要输出的内容为当前节点的地址、当前节点的数值、下一个节点的地址。
+   解题思路：
+题目需要我们先按照每个节点对应的地址以及它的下一个节点的地址作为索引，将每一个节点一个接一个链接起来，然后每k个节点翻转，若剩下的节点不满k个就不翻转。由于题目将地址作为节点的索引，我们顺其自然就可以想到用struct结构体，其中有三个变量：节点的地址、节点的数值、节点的下一个节点地址。这里当我们存结构体信息时，直接将当前节点的地址作为结构体变量的索引，即addr;然后依次存入node[addr].data和node[addr].next，这里可能会有疑惑：如果直接将addr作为结构体变量的索引，那如何得到node[addr].addr,其实我们知道node[addr].addr=addr,那我们可以写一个初始化函数，令node[i].addr=i,这样就解决了前面的问题。
+第二个问题就是题目要求当节点排好后还要以每k个节点翻转，那我们可以定义一个vector数组，借助reverse函数进行反转。这里开始从来就没想过还可以定义vector&amp;lt;Node&amp;gt;形式数组，因为在代码里我们已经定义了一个struct Node{};形式的数据类型。这样就很好做了，接下来我们要知道怎么依据当前节点地址和下一个节点地址来排好节点并存入vector数组中，我们先从题目给定的第一个节点的地址p入手，将该节点存入vector，然后将当前节点的下一个节点地址赋值给p，结束条件是p==-1,这样我们就存入了最初的节点排序。
+这里由于输入数据太多容易输错，就用C++文件读写操作将输入输出数据分别存入不同文件中。
+   代码
+ #include &amp;lt;iostream&amp;gt;#include &amp;lt;cstdio&amp;gt;#include &amp;lt;vector&amp;gt;#include &amp;lt;algorithm&amp;gt;#include &amp;lt;fstream&amp;gt;#include &amp;lt;iomanip&amp;gt;using namespace std; const int maxn=1e5+5; struct Node{ int addr,data,next; }node[maxn]; void init(){ for(int i=0;i&amp;lt;maxn;i++) node[i].addr=i; } int main(){ ifstream infile; ofstream outfile; infile.open(&amp;#34;C:\\Users\\jianqiao\\Desktop\\a.txt&amp;#34;,ios::in); if(!infile.is_open()) cout&amp;lt;&amp;lt;&amp;#34;Open file failure&amp;#34;&amp;lt;&amp;lt;endl; int head,len,k,addr; vector&amp;lt;Node&amp;gt; vec; //cin&amp;gt;&amp;gt;head&amp;gt;&amp;gt;len&amp;gt;&amp;gt;k; 	infile&amp;gt;&amp;gt;head&amp;gt;&amp;gt;len&amp;gt;&amp;gt;k; init(); /*for(int i=0;i&amp;lt;len;i++){ scanf(&amp;#34;%d&amp;#34;,&amp;amp;addr); scanf(&amp;#34;%d %d&amp;#34;,&amp;amp;node[addr].data,&amp;amp;node[addr].next); }*/ while(0!</description>
+    </item>
     
     <item>
       <title>递归解法</title>
