@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>链表专题 // yyer的个人博客</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.74.2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="John Doe" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://jianqiao1.github.io/css/main.min.88e7083eff65effb7485b6e6f38d10afbec25093a6fac42d734ce9024d3defbd.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="链表专题"/>
+<meta name="twitter:description" content="PAT A   1074 Reversing Linked List (25分) 1032 Sharing (25分) 1052 Linked List Sorting (25分) 1097 Deduplication on a Linked List (25分)  不同于力扣，上面四题，链表的每个节点信息一般用Node结构体存储，并借助STL中vector/map/set等操作节点位置。
+ 力扣   力扣21.合并两个有序链表  思路：递归，这里没有构造新节点，递归可以看做为栈的实现
+class Solution { public: ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) { if(l1==nullptr) return l2; if(l2==nullptr) return l1; if(l1-&gt;val&lt;l2-&gt;val) {l1-&gt;next=mergeTwoLists(l1-&gt;next,l2);return l1;} else {l2-&gt;next=mergeTwoLists(l1,l2-&gt;next);return l2;} } };  力扣24.两两交换链表中的节点  给定一个链表，两两交换其中相邻的节点，并返回交换后的链表，题目要求不能只是单纯的改变节点内部的值，而需要实际的进行节点交换。所以这里我们就不好借助什么vector数组存放并交换数值位置最后直接一个一个用curr-&gt;val==vec[i]进行更改了，这里我们得原地直接交换链表指针，可以采用迭代法和递归法。
+递归法于我来说还是那么的不好理解虽然代码很简洁，看起来就是不断地调用递归函数进行层层深入，每次调用函数有一个返回值，多次调用遇到终止条件就结束递归操作。
+迭代法可以先构造一个哑结点的下一个节点指向head,再让pre指向该哑结点，并且让函数循环的条件是pre-&gt;next!=nullptr&amp;&amp;pre-&gt;next-&gt;next!=nullptr,在循环体内就是针对pre,pre-&gt;next,pre-&gt;next-&gt;next进行链表指针交换，四个交换如下
+ListNode* start=pre-&gt;next; ListNode* end=pre-&gt;next-&gt;nex pre-&gt;next=start-&gt;next; start-&gt;next=end-&gt;next; end-&gt;next=start; pre=start; 递归代码"/>
+
+    <meta property="og:title" content="链表专题" />
+<meta property="og:description" content="PAT A   1074 Reversing Linked List (25分) 1032 Sharing (25分) 1052 Linked List Sorting (25分) 1097 Deduplication on a Linked List (25分)  不同于力扣，上面四题，链表的每个节点信息一般用Node结构体存储，并借助STL中vector/map/set等操作节点位置。
+ 力扣   力扣21.合并两个有序链表  思路：递归，这里没有构造新节点，递归可以看做为栈的实现
+class Solution { public: ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) { if(l1==nullptr) return l2; if(l2==nullptr) return l1; if(l1-&gt;val&lt;l2-&gt;val) {l1-&gt;next=mergeTwoLists(l1-&gt;next,l2);return l1;} else {l2-&gt;next=mergeTwoLists(l1,l2-&gt;next);return l2;} } };  力扣24.两两交换链表中的节点  给定一个链表，两两交换其中相邻的节点，并返回交换后的链表，题目要求不能只是单纯的改变节点内部的值，而需要实际的进行节点交换。所以这里我们就不好借助什么vector数组存放并交换数值位置最后直接一个一个用curr-&gt;val==vec[i]进行更改了，这里我们得原地直接交换链表指针，可以采用迭代法和递归法。
+递归法于我来说还是那么的不好理解虽然代码很简洁，看起来就是不断地调用递归函数进行层层深入，每次调用函数有一个返回值，多次调用遇到终止条件就结束递归操作。
+迭代法可以先构造一个哑结点的下一个节点指向head,再让pre指向该哑结点，并且让函数循环的条件是pre-&gt;next!=nullptr&amp;&amp;pre-&gt;next-&gt;next!=nullptr,在循环体内就是针对pre,pre-&gt;next,pre-&gt;next-&gt;next进行链表指针交换，四个交换如下
+ListNode* start=pre-&gt;next; ListNode* end=pre-&gt;next-&gt;nex pre-&gt;next=start-&gt;next; start-&gt;next=end-&gt;next; end-&gt;next=start; pre=start; 递归代码" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jianqiao1.github.io/post/%E9%93%BE%E8%A1%A8%E4%B8%93%E9%A2%98/" />
+<meta property="article:published_time" content="2020-08-10T22:19:58+08:00" />
+<meta property="article:modified_time" content="2020-08-10T22:19:58+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://jianqiao1.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="John Doe" /></a>
+      <h1>yyer的个人博客</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vehicula turpis sit amet elit pretium.</p>
+      <div class="app-header-social">
+        
+          <a target="_blank" href="https://github.com/jianqiao1" rel="noreferrer noopener"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">链表专题</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Aug 10, 2020
+        </div>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          4 min read
+        </div></div>
+    </header>
+    <div class="post-content">
+      <ol>
+<li>PAT A</li>
+</ol>
+<ul>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805394512134144">1074 Reversing Linked List (25分)</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805460652113920">1032 Sharing (25分)</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805425780670464">1052 Linked List Sorting (25分)</a></li>
+<li><a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805369774129152">1097 Deduplication on a Linked List (25分)</a></li>
+</ul>
+<p>不同于力扣，上面四题，链表的每个节点信息一般用<code>Node</code>结构体存储，并借助<code>STL</code>中<code>vector/map/set</code>等操作节点位置。</p>
+<hr>
+<ol start="2">
+<li>力扣</li>
+</ol>
+<ul>
+<li><a href="https://leetcode-cn.com/problems/merge-two-sorted-lists/">力扣21.合并两个有序链表</a></li>
+</ul>
+<p>思路：<strong>递归</strong>，这里没有构造新节点，递归可以看做为栈的实现</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode<span style="color:#f92672">*</span> mergeTwoLists(ListNode<span style="color:#f92672">*</span> l1, ListNode<span style="color:#f92672">*</span> l2) {
+      <span style="color:#66d9ef">if</span>(l1<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#66d9ef">return</span> l2;
+      <span style="color:#66d9ef">if</span>(l2<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#66d9ef">return</span> l1;
+      <span style="color:#66d9ef">if</span>(l1<span style="color:#f92672">-&gt;</span>val<span style="color:#f92672">&lt;</span>l2<span style="color:#f92672">-&gt;</span>val) {l1<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>mergeTwoLists(l1<span style="color:#f92672">-&gt;</span>next,l2);<span style="color:#66d9ef">return</span> l1;}
+      <span style="color:#66d9ef">else</span> {l2<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>mergeTwoLists(l1,l2<span style="color:#f92672">-&gt;</span>next);<span style="color:#66d9ef">return</span> l2;}
+    }
+};  
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/swap-nodes-in-pairs/">力扣24.两两交换链表中的节点</a></li>
+</ul>
+<p>给定一个链表，两两交换其中相邻的节点，并返回交换后的链表，<strong>题目要求不能只是单纯的改变节点内部的值</strong>，而需要实际的进行节点交换。所以这里我们就不好借助什么<code>vector</code>数组存放并交换数值位置最后直接一个一个用<code>curr-&gt;val==vec[i]</code>进行更改了，这里我们得<strong>原地直接交换链表指针</strong>，可以采用<strong>迭代法</strong>和<strong>递归法</strong>。</p>
+<p>递归法于我来说还是那么的不好理解虽然代码很简洁，看起来就是不断地调用递归函数进行层层深入，每次调用函数有一个返回值，多次调用遇到终止条件就结束递归操作。<br>
+迭代法可以先构造一个哑结点的下一个节点指向<code>head</code>,再让<code>pre</code>指向该哑结点，并且让函数循环的条件是<code>pre-&gt;next!=nullptr&amp;&amp;pre-&gt;next-&gt;next!=nullptr</code>,在循环体内就是针对<code>pre</code>,<code>pre-&gt;next</code>,<code>pre-&gt;next-&gt;next</code>进行链表指针交换，四个交换如下</p>
+<pre><code>ListNode* start=pre-&gt;next;
+ListNode* end=pre-&gt;next-&gt;nex
+pre-&gt;next=start-&gt;next;
+start-&gt;next=end-&gt;next;
+end-&gt;next=start;
+pre=start;   
+</code></pre><p>递归代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode<span style="color:#f92672">*</span> swapPairs(ListNode<span style="color:#f92672">*</span> head) {
+        <span style="color:#66d9ef">if</span>(head<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">||</span>head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>){
+            <span style="color:#66d9ef">return</span> head;
+        }
+        ListNode<span style="color:#f92672">*</span> next<span style="color:#f92672">=</span>head<span style="color:#f92672">-&gt;</span>next;
+        head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>swapPairs(next<span style="color:#f92672">-&gt;</span>next);
+        next<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>head;
+        <span style="color:#66d9ef">return</span> next;
+    }
+};
+</code></pre></div><p>迭代代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode<span style="color:#f92672">*</span> swapPairs(ListNode<span style="color:#f92672">*</span> head) {
+        ListNode<span style="color:#f92672">*</span> dummy<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> ListNode(<span style="color:#ae81ff">0</span>);
+        dummy<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>head;
+        ListNode<span style="color:#f92672">*</span> pre<span style="color:#f92672">=</span>dummy;
+        <span style="color:#66d9ef">while</span>(pre<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">&amp;&amp;</span>pre<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+            ListNode<span style="color:#f92672">*</span> start<span style="color:#f92672">=</span>pre<span style="color:#f92672">-&gt;</span>next;
+            ListNode<span style="color:#f92672">*</span> end<span style="color:#f92672">=</span>pre<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>next;
+            pre<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>start<span style="color:#f92672">-&gt;</span>next;
+            start<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>end<span style="color:#f92672">-&gt;</span>next;
+            end<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>start;
+            pre<span style="color:#f92672">=</span>start;
+        }
+        <span style="color:#66d9ef">return</span> dummy<span style="color:#f92672">-&gt;</span>next;
+    }
+};   
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/">83. 删除排序链表中的重复元素</a></li>
+</ul>
+<p>本题是给定了一个<strong>排好序</strong>的链表，删除所有重复的元素，使得每个元素只出现一次。由于已经排好序，所以值相同的节点位置相邻，可以不用借助<code>set</code>容器去重。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode<span style="color:#f92672">*</span> deleteDuplicates(ListNode<span style="color:#f92672">*</span> head) {
+        <span style="color:#66d9ef">if</span>(head<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">||</span>head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#66d9ef">return</span> head;
+        ListNode<span style="color:#f92672">*</span> curr<span style="color:#f92672">=</span>head;
+        <span style="color:#66d9ef">while</span>(head<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">&amp;&amp;</span>head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+            <span style="color:#66d9ef">if</span>(head<span style="color:#f92672">-&gt;</span>val<span style="color:#f92672">==</span>head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>val) head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>next;
+            <span style="color:#66d9ef">else</span> head<span style="color:#f92672">=</span>head<span style="color:#f92672">-&gt;</span>next;
+        }
+        <span style="color:#66d9ef">return</span> curr; 
+    }
+};   
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/remove-duplicate-node-lcci/">面试题 02.01. 移除重复节点</a></li>
+</ul>
+<p>本题与上面题目有所不同，这里链表是没有排序的，可以借助<code>set</code>容器去重;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode<span style="color:#f92672">*</span> removeDuplicateNodes(ListNode<span style="color:#f92672">*</span> head) {
+        <span style="color:#66d9ef">if</span>(head<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">||</span>head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#66d9ef">return</span> head;
+       set<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> st;
+       ListNode<span style="color:#f92672">*</span> curr<span style="color:#f92672">=</span>head;
+       <span style="color:#66d9ef">while</span>(curr<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">&amp;&amp;</span>curr<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+           st.insert(curr<span style="color:#f92672">-&gt;</span>val);
+          <span style="color:#66d9ef">if</span>(st.find(curr<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>val)<span style="color:#f92672">!=</span>st.end()) curr<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>curr<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>next;
+          <span style="color:#66d9ef">else</span> curr<span style="color:#f92672">=</span>curr<span style="color:#f92672">-&gt;</span>next;
+       }
+       <span style="color:#66d9ef">return</span> head;
+    }
+};  
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/">82. 删除排序链表中的重复元素 II</a></li>
+</ul>
+<p>给定一个排序链表，删除所有含有重复数字的节点，只保留原始链表中没有重复出现的数字。这题和上两题又有所不同，这里所有重复出现的数字都要删除，可以用两种方法做：</p>
+<p>第一种方法借助<code>map</code>容器和<code>vector</code>容器，用map键值对记录节点值和出现次数，然后遍历map容器，将所有value值为1的key存入vector,然后遍历vector,同时不断创建新的链表节点，这里有两点值得注意，第一个操作是将所有value值为1的key存入vector，代码段如下：</p>
+<pre><code>for(auto i:mp){
+    if(i.second==1) vec.push_back(i.first);
+  }  
+</code></pre><p>第二个操作是不断创建新的链表节点操作：</p>
+<pre><code>ListNode* dummy=new ListNode(-1);
+    ListNode* pre=dummy; 
+        ...
+    ListNode* tmp=new ListNode(vec[i]);
+    pre-&gt;next=tmp;
+    pre=pre-&gt;next;
+        ...
+    return dummy-&gt;next;
+</code></pre><p>第二种方法使用<strong>双指针</strong>，定义p、q两个指针，其中p最开始指向哑结点（防止2-&gt;2-&gt;2-&gt;2-&gt;3类型的），q最开始指向head节点，在while循环语句中我们比较的是<code>p-&gt;next-&gt;val</code>是否等于<code>q-&gt;next-&gt;val</code>,若不等，则p与q各自指向下一个节点；否则再使用一个while循环，里面的while循环条件是<code>q!=nullptr&amp;&amp;q-&gt;next!=nullptr&amp;&amp;p-&gt;next-&gt;val==q-&gt;next-&gt;val</code>,如果满足这个条件就让<code>q=q-&gt;next</code>;否则就让<code>p-&gt;next=q-&gt;next</code>;同时<code>q=q-&gt;next</code>;最外层的<code>while</code>循环终止条件是<code>q!=nullptr&amp;&amp;q-&gt;next!=nullptr</code>.<br>
+哈希表代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode<span style="color:#f92672">*</span> deleteDuplicates(ListNode<span style="color:#f92672">*</span> head) {
+        <span style="color:#66d9ef">if</span>(head<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">||</span>head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#66d9ef">return</span> head;
+        map<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>,<span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> mp;
+        vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> vec;
+        ListNode<span style="color:#f92672">*</span> dummy<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> ListNode(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+        ListNode<span style="color:#f92672">*</span> pre<span style="color:#f92672">=</span>dummy;
+        ListNode<span style="color:#f92672">*</span> curr<span style="color:#f92672">=</span>head;
+        <span style="color:#66d9ef">while</span>(curr<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+            mp[curr<span style="color:#f92672">-&gt;</span>val]<span style="color:#f92672">++</span>;
+            curr<span style="color:#f92672">=</span>curr<span style="color:#f92672">-&gt;</span>next;
+        }
+        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">auto</span> i:mp){
+            <span style="color:#66d9ef">if</span>(i.second<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>) vec.push_back(i.first);
+        }
+        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>vec.size();i<span style="color:#f92672">++</span>){
+            ListNode<span style="color:#f92672">*</span> tmp<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> ListNode(vec[i]);
+            pre<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>tmp;
+            pre<span style="color:#f92672">=</span>pre<span style="color:#f92672">-&gt;</span>next;
+        }
+        <span style="color:#66d9ef">return</span> dummy<span style="color:#f92672">-&gt;</span>next;
+    }
+};  
+</code></pre></div><p>双指针代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode<span style="color:#f92672">*</span> deleteDuplicates(ListNode<span style="color:#f92672">*</span> head) {
+        <span style="color:#66d9ef">if</span>(head<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">||</span>head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#66d9ef">return</span> head;
+        ListNode<span style="color:#f92672">*</span> pre<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> ListNode(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+        pre<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>head;
+        ListNode<span style="color:#f92672">*</span> p<span style="color:#f92672">=</span>pre;
+        ListNode<span style="color:#f92672">*</span> q<span style="color:#f92672">=</span>pre<span style="color:#f92672">-&gt;</span>next;
+        <span style="color:#66d9ef">while</span>(q<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">&amp;&amp;</span>q<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+            <span style="color:#66d9ef">if</span>(p<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>val<span style="color:#f92672">!=</span>q<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>val){
+                p<span style="color:#f92672">=</span>p<span style="color:#f92672">-&gt;</span>next;
+                q<span style="color:#f92672">=</span>q<span style="color:#f92672">-&gt;</span>next;
+            }
+            <span style="color:#66d9ef">else</span>{
+                <span style="color:#66d9ef">while</span>(q<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">&amp;&amp;</span>q<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">&amp;&amp;</span>p<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>val<span style="color:#f92672">==</span>q<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>val) q<span style="color:#f92672">=</span>q<span style="color:#f92672">-&gt;</span>next;
+                p<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>q<span style="color:#f92672">-&gt;</span>next;
+                q<span style="color:#f92672">=</span>q<span style="color:#f92672">-&gt;</span>next;
+            }
+        }
+        <span style="color:#66d9ef">return</span> pre<span style="color:#f92672">-&gt;</span>next;
+    }
+};  
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/delete-node-in-a-linked-list/">237.删除链表中的节点</a></li>
+</ul>
+<p>题目要求编写一个函数，删除某个链表中给定的<strong>非末尾</strong>节点，传入函数的唯一参数就是要被删除的节点。<br>
+由于已经指明删除的节点不是最后一个，我们就可以将本该删除的当前节点的下一个节点的值赋给当前节点，然后改变当前节点的指针指向下下一个节点，相当于删除了当前节点的下一个节点，但是实际上符合题目要求。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">void</span> deleteNode(ListNode<span style="color:#f92672">*</span> node) {
+      node<span style="color:#f92672">-&gt;</span>val<span style="color:#f92672">=</span>node<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>val;
+      node<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>node<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>next;
+    }
+};  
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/remove-linked-list-elements/">203.移除链表元素</a></li>
+</ul>
+<p>删除链表中等于给定值val的所有节点,删除节点的一般步骤是首先找到该节点的前一个节点，然后进行删除操作。我们可以添加虚拟头指针，这样方便删除头结点。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode<span style="color:#f92672">*</span> removeElements(ListNode<span style="color:#f92672">*</span> head, <span style="color:#66d9ef">int</span> val) {
+        <span style="color:#66d9ef">if</span>(head<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#66d9ef">return</span> head;
+        ListNode<span style="color:#f92672">*</span> dummy<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> ListNode(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+        dummy<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>head;
+        ListNode<span style="color:#f92672">*</span> pre<span style="color:#f92672">=</span>dummy;
+        <span style="color:#66d9ef">while</span>(pre<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+            <span style="color:#66d9ef">if</span>(pre<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>val<span style="color:#f92672">==</span>val){
+                pre<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>pre<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>next;
+            }<span style="color:#66d9ef">else</span> pre<span style="color:#f92672">=</span>pre<span style="color:#f92672">-&gt;</span>next;
+        }
+        <span style="color:#66d9ef">return</span> dummy<span style="color:#f92672">-&gt;</span>next;
+    }
+};  
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof/">剑指 Offer 22. 链表中倒数第k个节点</a></li>
+</ul>
+<p>输入一个链表，输出该链表第k个节点；解题思路：<strong>双指针</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode<span style="color:#f92672">*</span> getKthFromEnd(ListNode<span style="color:#f92672">*</span> head, <span style="color:#66d9ef">int</span> k) {
+       ListNode<span style="color:#f92672">*</span> p<span style="color:#f92672">=</span>head,<span style="color:#f92672">*</span>q<span style="color:#f92672">=</span>head;
+       <span style="color:#66d9ef">while</span>(k<span style="color:#f92672">--</span>){
+           q<span style="color:#f92672">=</span>q<span style="color:#f92672">-&gt;</span>next;
+       }
+       <span style="color:#66d9ef">while</span>(q<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+           p<span style="color:#f92672">=</span>p<span style="color:#f92672">-&gt;</span>next;
+           q<span style="color:#f92672">=</span>q<span style="color:#f92672">-&gt;</span>next;
+       }
+       <span style="color:#66d9ef">return</span> p;
+    }
+};   
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/middle-of-the-linked-list/">876. 链表的中间结点</a></li>
+</ul>
+<p>给定一个带有头结点的非空单链表，返回链表的中间结点，若有两个中间结点，则只要返回第二个中间结点。<br>
+解题思路：<strong>双指针</strong>，定义两个快慢指针都指向头结点，让慢指针<code>p</code>每次前进一步，快指针<code>q</code>每次前进两步,循环终止条件是<code>q==nullptr||q-&gt;next==nullptr</code>,最后返回<code>p</code>指向的结点。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode<span style="color:#f92672">*</span> middleNode(ListNode<span style="color:#f92672">*</span> head) {
+       <span style="color:#66d9ef">if</span>(head<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">||</span>head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#66d9ef">return</span> head;
+       ListNode<span style="color:#f92672">*</span> p<span style="color:#f92672">=</span>head,<span style="color:#f92672">*</span>q<span style="color:#f92672">=</span>head;
+       <span style="color:#66d9ef">while</span>(q<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">&amp;&amp;</span>q<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+           p<span style="color:#f92672">=</span>p<span style="color:#f92672">-&gt;</span>next;
+           q<span style="color:#f92672">=</span>q<span style="color:#f92672">-&gt;</span>next;
+           <span style="color:#66d9ef">if</span>(q<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>) q<span style="color:#f92672">=</span>q<span style="color:#f92672">-&gt;</span>next;
+       }
+       <span style="color:#66d9ef">return</span> p;
+    }
+};   
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/linked-list-cycle/">141.环形链表</a></li>
+</ul>
+<p>给定一个链表，判断链表中是否有环，索引从0开始。<br>
+解题思路：<strong>快慢双指针</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">bool</span> hasCycle(ListNode <span style="color:#f92672">*</span>head) {
+        ListNode<span style="color:#f92672">*</span> p<span style="color:#f92672">=</span>head,<span style="color:#f92672">*</span>q<span style="color:#f92672">=</span>head;
+        <span style="color:#66d9ef">while</span>(q<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">&amp;&amp;</span>q<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+            p<span style="color:#f92672">=</span>p<span style="color:#f92672">-&gt;</span>next;
+            q<span style="color:#f92672">=</span>q<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>next;
+            <span style="color:#66d9ef">if</span>(p<span style="color:#f92672">==</span>q) <span style="color:#66d9ef">return</span> true; 
+        }
+        <span style="color:#66d9ef">return</span> false;
+    }
+};   
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/linked-list-cycle-ii/">142. 环形链表 II</a></li>
+</ul>
+<p>给定一个链表，返回链表开始入环的第一个节点，若链表无环，则返回null。
+解题思路：<strong>快慢双指针</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode <span style="color:#f92672">*</span>detectCycle(ListNode <span style="color:#f92672">*</span>head) {
+        <span style="color:#66d9ef">if</span>(head<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">||</span>head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nullptr</span>;
+        ListNode<span style="color:#f92672">*</span> p<span style="color:#f92672">=</span>head,<span style="color:#f92672">*</span>q<span style="color:#f92672">=</span>head;
+        <span style="color:#66d9ef">while</span>(true){
+            <span style="color:#66d9ef">if</span>(q<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">||</span>q<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nullptr</span>;
+            p<span style="color:#f92672">=</span>p<span style="color:#f92672">-&gt;</span>next;
+            q<span style="color:#f92672">=</span>q<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>next;
+            <span style="color:#66d9ef">if</span>(p<span style="color:#f92672">==</span>q) <span style="color:#66d9ef">break</span>;
+        }
+        q<span style="color:#f92672">=</span>head;
+        <span style="color:#66d9ef">while</span>(p<span style="color:#f92672">!=</span>q){
+            p<span style="color:#f92672">=</span>p<span style="color:#f92672">-&gt;</span>next;
+            q<span style="color:#f92672">=</span>q<span style="color:#f92672">-&gt;</span>next;
+        }
+        <span style="color:#66d9ef">return</span> p;
+    }
+};   
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists/">160.相交链表</a></li>
+</ul>
+<p>找到两个单链表相交的起始节点，若不相交自然返回<code>nullptr</code>。  <br>
+解题思路：<strong>双链表</strong>，p,q分别指向两个链表的头结点，当p或q走完自己原来所在链表为nulptr时就重新将其赋值为另一个链表的头结点。代码主要思路就是：若相交，则<!-- raw HTML omitted -->a+c+b<!-- raw HTML omitted -->+c=<!-- raw HTML omitted -->b+c+a<!-- raw HTML omitted -->+c,其中c为两链表相交的那一段；若不相交，则a+b=b+c,最后返回nullptr。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode <span style="color:#f92672">*</span>getIntersectionNode(ListNode <span style="color:#f92672">*</span>headA, ListNode <span style="color:#f92672">*</span>headB) {
+        ListNode<span style="color:#f92672">*</span> p<span style="color:#f92672">=</span>headA,<span style="color:#f92672">*</span>q<span style="color:#f92672">=</span>headB;
+        <span style="color:#66d9ef">while</span>(p<span style="color:#f92672">!=</span>q){
+            p<span style="color:#f92672">=</span>p<span style="color:#f92672">?</span>p<span style="color:#f92672">-&gt;</span>next:headB;
+            q<span style="color:#f92672">=</span>q<span style="color:#f92672">?</span>q<span style="color:#f92672">-&gt;</span>next:headA;
+        }
+        <span style="color:#66d9ef">return</span> p;
+    }
+};   
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/reverse-linked-list/">206.反转链表</a></li>
+</ul>
+<p>反转一个单链表，迭代法解决。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode<span style="color:#f92672">*</span> reverseList(ListNode<span style="color:#f92672">*</span> head) {
+       <span style="color:#66d9ef">if</span>(head<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">||</span>head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#66d9ef">return</span> head;
+       ListNode<span style="color:#f92672">*</span> pre<span style="color:#f92672">=</span><span style="color:#66d9ef">nullptr</span>;
+       ListNode<span style="color:#f92672">*</span> curr<span style="color:#f92672">=</span>head;
+       ListNode<span style="color:#f92672">*</span> tmp<span style="color:#f92672">=</span><span style="color:#66d9ef">nullptr</span>;
+       <span style="color:#66d9ef">while</span>(curr<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+           tmp<span style="color:#f92672">=</span>curr<span style="color:#f92672">-&gt;</span>next;
+           curr<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>pre;
+           pre<span style="color:#f92672">=</span>curr;
+           curr<span style="color:#f92672">=</span>tmp;
+       } 
+       <span style="color:#66d9ef">return</span> pre;
+    }
+};   
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/palindrome-linked-list/">234.回文联表</a></li>
+</ul>
+<p>判断一个链表是否为回文链表； <br>
+解题思路：快慢指针+翻转，即用快慢指针遍历的同时翻转前半部分，然后与后半部分比较；</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">bool</span> isPalindrome(ListNode<span style="color:#f92672">*</span> head) {
+       <span style="color:#66d9ef">if</span>(head<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">||</span>head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#66d9ef">return</span> true; 
+       ListNode<span style="color:#f92672">*</span> fast<span style="color:#f92672">=</span>head,<span style="color:#f92672">*</span>slow<span style="color:#f92672">=</span>head;
+       ListNode<span style="color:#f92672">*</span> pre<span style="color:#f92672">=</span><span style="color:#66d9ef">nullptr</span>,<span style="color:#f92672">*</span>p<span style="color:#f92672">=</span><span style="color:#66d9ef">nullptr</span>;
+       <span style="color:#66d9ef">while</span>(fast<span style="color:#f92672">&amp;&amp;</span>fast<span style="color:#f92672">-&gt;</span>next){
+           pre<span style="color:#f92672">=</span>slow;
+           slow<span style="color:#f92672">=</span>slow<span style="color:#f92672">-&gt;</span>next;
+           fast<span style="color:#f92672">=</span>fast<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>next;
+           pre<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>p;
+           p<span style="color:#f92672">=</span>pre;
+       }
+       <span style="color:#66d9ef">if</span>(fast) slow<span style="color:#f92672">=</span>slow<span style="color:#f92672">-&gt;</span>next;
+       <span style="color:#66d9ef">while</span>(pre){
+           <span style="color:#66d9ef">if</span>(pre<span style="color:#f92672">-&gt;</span>val<span style="color:#f92672">!=</span>slow<span style="color:#f92672">-&gt;</span>val) <span style="color:#66d9ef">return</span> false;
+           pre<span style="color:#f92672">=</span>pre<span style="color:#f92672">-&gt;</span>next;
+           slow<span style="color:#f92672">=</span>slow<span style="color:#f92672">-&gt;</span>next;
+       }
+       <span style="color:#66d9ef">return</span> true;
+    }
+};   
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/add-two-numbers/">2.两数相加</a></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode<span style="color:#f92672">*</span> addTwoNumbers(ListNode<span style="color:#f92672">*</span> l1, ListNode<span style="color:#f92672">*</span> l2) {
+        ListNode<span style="color:#f92672">*</span> dummy<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> ListNode(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+        ListNode<span style="color:#f92672">*</span>pre<span style="color:#f92672">=</span>dummy;
+        <span style="color:#66d9ef">bool</span> carry<span style="color:#f92672">=</span>false;
+        <span style="color:#66d9ef">int</span> sum;
+        <span style="color:#66d9ef">while</span>(l1<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">||</span>l2<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+            sum<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
+            <span style="color:#66d9ef">if</span>(l1<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+                sum<span style="color:#f92672">+=</span>l1<span style="color:#f92672">-&gt;</span>val;
+                l1<span style="color:#f92672">=</span>l1<span style="color:#f92672">-&gt;</span>next;
+            } 
+            <span style="color:#66d9ef">if</span>(l2<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+                sum<span style="color:#f92672">+=</span>l2<span style="color:#f92672">-&gt;</span>val;
+                l2<span style="color:#f92672">=</span>l2<span style="color:#f92672">-&gt;</span>next;
+            }
+            <span style="color:#66d9ef">if</span>(carry) sum<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>;
+            carry<span style="color:#f92672">=</span>sum<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">10</span><span style="color:#f92672">?</span>true<span style="color:#f92672">:</span>false;
+            ListNode<span style="color:#f92672">*</span> tmp<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> ListNode(sum<span style="color:#f92672">%</span><span style="color:#ae81ff">10</span>);   
+            pre<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>tmp;
+            pre<span style="color:#f92672">=</span>pre<span style="color:#f92672">-&gt;</span>next;
+        }
+        <span style="color:#66d9ef">if</span>(carry) pre<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> ListNode(<span style="color:#ae81ff">1</span>);
+        <span style="color:#66d9ef">return</span> dummy<span style="color:#f92672">-&gt;</span>next;
+    }
+};    
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/partition-list/">86.分隔链表</a></li>
+</ul>
+<p>给定一个链表和一个特定值 x，对链表进行分隔，使得所有小于 x 的节点都在大于或等于 x 的节点之前，你应当保留两个分区中每个节点的初始相对位置。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode<span style="color:#f92672">*</span> partition(ListNode<span style="color:#f92672">*</span> head, <span style="color:#66d9ef">int</span> x) {
+        <span style="color:#66d9ef">if</span>(head<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">||</span>head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#66d9ef">return</span> head;
+        ListNode<span style="color:#f92672">*</span> pre1<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> ListNode(<span style="color:#ae81ff">0</span>);
+        ListNode<span style="color:#f92672">*</span> p1<span style="color:#f92672">=</span>pre1;
+        ListNode<span style="color:#f92672">*</span> pre2<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> ListNode(<span style="color:#ae81ff">0</span>);
+        ListNode<span style="color:#f92672">*</span> p2<span style="color:#f92672">=</span>pre2;
+        ListNode<span style="color:#f92672">*</span> curr<span style="color:#f92672">=</span>head;
+        <span style="color:#66d9ef">while</span>(curr<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+            <span style="color:#66d9ef">if</span>(curr<span style="color:#f92672">-&gt;</span>val<span style="color:#f92672">&lt;</span>x){
+                p1<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> ListNode(curr<span style="color:#f92672">-&gt;</span>val);
+                p1<span style="color:#f92672">=</span>p1<span style="color:#f92672">-&gt;</span>next;
+            }
+            <span style="color:#66d9ef">else</span>{
+                p2<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> ListNode(curr<span style="color:#f92672">-&gt;</span>val);
+                p2<span style="color:#f92672">=</span>p2<span style="color:#f92672">-&gt;</span>next;
+            }
+            curr<span style="color:#f92672">=</span>curr<span style="color:#f92672">-&gt;</span>next;
+        }
+        p1<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span> pre2<span style="color:#f92672">-&gt;</span>next;
+        <span style="color:#66d9ef">return</span> pre1<span style="color:#f92672">-&gt;</span>next;
+    }
+};    
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/convert-sorted-list-to-binary-search-tree/">109. 有序链表转换二叉搜索树</a></li>
+</ul>
+<p>给定一个单链表，其中的元素按升序排序，将其转换为高度平衡的二叉搜索树。本题中，一个高度平衡二叉树是指一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    TreeNode<span style="color:#f92672">*</span> sortedListToBST(ListNode<span style="color:#f92672">*</span> head) {
+        <span style="color:#66d9ef">if</span>(head<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nullptr</span>;
+        ListNode<span style="color:#f92672">*</span> mid<span style="color:#f92672">=</span>findMidNode(head);
+        TreeNode<span style="color:#f92672">*</span> node<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> TreeNode(mid<span style="color:#f92672">-&gt;</span>val);
+        <span style="color:#66d9ef">if</span>(head<span style="color:#f92672">==</span>mid) <span style="color:#66d9ef">return</span> node;
+        node<span style="color:#f92672">-&gt;</span>left<span style="color:#f92672">=</span>sortedListToBST(head);
+        node<span style="color:#f92672">-&gt;</span>right<span style="color:#f92672">=</span>sortedListToBST(mid<span style="color:#f92672">-&gt;</span>next);
+        <span style="color:#66d9ef">return</span> node; 
+    }
+    ListNode<span style="color:#f92672">*</span> <span style="color:#a6e22e">findMidNode</span>(ListNode<span style="color:#f92672">*</span> head){
+        ListNode<span style="color:#f92672">*</span> fast<span style="color:#f92672">=</span>head,<span style="color:#f92672">*</span>slow<span style="color:#f92672">=</span>head;
+        ListNode<span style="color:#f92672">*</span> pre<span style="color:#f92672">=</span><span style="color:#66d9ef">nullptr</span>;
+        <span style="color:#66d9ef">while</span>(fast<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">&amp;&amp;</span>fast<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+            pre<span style="color:#f92672">=</span>slow;
+            slow<span style="color:#f92672">=</span>slow<span style="color:#f92672">-&gt;</span>next;
+            fast<span style="color:#f92672">=</span>fast<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>next;
+        }
+        <span style="color:#66d9ef">if</span>(pre<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>) pre<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span><span style="color:#66d9ef">nullptr</span>;
+        <span style="color:#66d9ef">return</span> slow;
+    }
+};    
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/copy-list-with-random-pointer/">138. 复制带随机指针的链表</a></li>
+</ul>
+<p>给定一个链表，每个节点包含一个额外增加的随机指针，该指针可以指向链表中的任何节点或空节点。
+要求返回这个链表的 深拷贝。 
+我们用一个由 n 个节点组成的链表来表示输入/输出中的链表。每个节点用一个 [val, random_index] 表示：</p>
+<pre><code>val：一个表示 Node.val 的整数。
+random_index：随机指针指向的节点索引（范围从 0 到 n-1）；如果不指向任何节点，则为  null 。
+</code></pre><p>代码：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">/*
+</span><span style="color:#75715e">// Definition for a Node.
+</span><span style="color:#75715e">class Node {
+</span><span style="color:#75715e">public:
+</span><span style="color:#75715e">    int val;
+</span><span style="color:#75715e">    Node* next;
+</span><span style="color:#75715e">    Node* random;
+</span><span style="color:#75715e">    
+</span><span style="color:#75715e">    Node(int _val) {
+</span><span style="color:#75715e">        val = _val;
+</span><span style="color:#75715e">        next = NULL;
+</span><span style="color:#75715e">        random = NULL;
+</span><span style="color:#75715e">    }
+</span><span style="color:#75715e">};
+</span><span style="color:#75715e">*/</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    Node<span style="color:#f92672">*</span> copyRandomList(Node<span style="color:#f92672">*</span> head) {
+       unordered_map<span style="color:#f92672">&lt;</span>Node<span style="color:#f92672">*</span>,Node<span style="color:#f92672">*&gt;</span> mp;
+       Node<span style="color:#f92672">*</span> curr<span style="color:#f92672">=</span>head;
+       <span style="color:#66d9ef">while</span>(curr<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+           Node<span style="color:#f92672">*</span> copy<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> Node(curr<span style="color:#f92672">-&gt;</span>val);
+           mp[curr]<span style="color:#f92672">=</span>copy;
+           curr<span style="color:#f92672">=</span>curr<span style="color:#f92672">-&gt;</span>next;
+       }
+       curr<span style="color:#f92672">=</span>head;
+       <span style="color:#66d9ef">while</span>(curr<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+           mp[curr]<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>mp[curr<span style="color:#f92672">-&gt;</span>next];
+           mp[curr]<span style="color:#f92672">-&gt;</span>random<span style="color:#f92672">=</span>mp[curr<span style="color:#f92672">-&gt;</span>random];
+           curr<span style="color:#f92672">=</span>curr<span style="color:#f92672">-&gt;</span>next;
+       } 
+       <span style="color:#66d9ef">return</span> mp[head];
+    }
+};   
+</code></pre></div><ul>
+<li><a href="https://leetcode-cn.com/problems/insertion-sort-list/">147. 对链表进行插入排序</a></li>
+</ul>
+<pre><code>插入排序算法：
+1.插入排序是迭代的，每次只移动一个元素，直到所有元素可以形成一个有序的输出列表。
+2.每次迭代中，插入排序只从输入数据中移除一个待排序的元素，找到它在序列中适当的位置，并将其插入。
+3.重复直到所有输入数据插入完为止。  
+</code></pre><p>代码：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    ListNode<span style="color:#f92672">*</span> insertionSortList(ListNode<span style="color:#f92672">*</span> head) {
+       <span style="color:#66d9ef">if</span>(head<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span><span style="color:#f92672">||</span>head<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#66d9ef">return</span> head;
+       ListNode<span style="color:#f92672">*</span> dummyNode<span style="color:#f92672">=</span><span style="color:#66d9ef">new</span> ListNode(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+       dummyNode<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>head;
+       ListNode<span style="color:#f92672">*</span> pre<span style="color:#f92672">=</span>head;
+       ListNode<span style="color:#f92672">*</span> node<span style="color:#f92672">=</span>head<span style="color:#f92672">-&gt;</span>next;
+       ListNode<span style="color:#f92672">*</span> tmp<span style="color:#f92672">=</span><span style="color:#66d9ef">nullptr</span>;
+       <span style="color:#66d9ef">while</span>(node){
+           <span style="color:#66d9ef">if</span>(node<span style="color:#f92672">-&gt;</span>val<span style="color:#f92672">&lt;</span>pre<span style="color:#f92672">-&gt;</span>val){
+               tmp<span style="color:#f92672">=</span>dummyNode;
+               <span style="color:#66d9ef">while</span>(tmp<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">-&gt;</span>val<span style="color:#f92672">&lt;</span>node<span style="color:#f92672">-&gt;</span>val) tmp<span style="color:#f92672">=</span>tmp<span style="color:#f92672">-&gt;</span>next;
+               pre<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>node<span style="color:#f92672">-&gt;</span>next;
+               node<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>tmp<span style="color:#f92672">-&gt;</span>next;
+               tmp<span style="color:#f92672">-&gt;</span>next<span style="color:#f92672">=</span>node;
+               node<span style="color:#f92672">=</span>pre<span style="color:#f92672">-&gt;</span>next;
+           }<span style="color:#66d9ef">else</span>{
+               pre<span style="color:#f92672">=</span>pre<span style="color:#f92672">-&gt;</span>next;
+               node<span style="color:#f92672">=</span>node<span style="color:#f92672">-&gt;</span>next;
+           }
+       }
+       <span style="color:#66d9ef">return</span> dummyNode<span style="color:#f92672">-&gt;</span>next;
+    }
+};   
+</code></pre></div>
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

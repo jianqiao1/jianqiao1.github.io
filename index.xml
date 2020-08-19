@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>yyer</title>
+    <title>yyer的个人博客</title>
     <link>https://jianqiao1.github.io/</link>
-    <description>Recent content on yyer</description>
+    <description>Recent content on yyer的个人博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Aug 2020 23:46:47 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 10 Aug 2020 22:19:58 +0800</lastBuildDate>
     
 	<atom:link href="https://jianqiao1.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>链表专题</title>
+      <link>https://jianqiao1.github.io/post/%E9%93%BE%E8%A1%A8%E4%B8%93%E9%A2%98/</link>
+      <pubDate>Mon, 10 Aug 2020 22:19:58 +0800</pubDate>
+      
+      <guid>https://jianqiao1.github.io/post/%E9%93%BE%E8%A1%A8%E4%B8%93%E9%A2%98/</guid>
+      <description>PAT A   1074 Reversing Linked List (25分) 1032 Sharing (25分) 1052 Linked List Sorting (25分) 1097 Deduplication on a Linked List (25分)  不同于力扣，上面四题，链表的每个节点信息一般用Node结构体存储，并借助STL中vector/map/set等操作节点位置。
+ 力扣   力扣21.合并两个有序链表  思路：递归，这里没有构造新节点，递归可以看做为栈的实现
+class Solution { public: ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) { if(l1==nullptr) return l2; if(l2==nullptr) return l1; if(l1-&amp;gt;val&amp;lt;l2-&amp;gt;val) {l1-&amp;gt;next=mergeTwoLists(l1-&amp;gt;next,l2);return l1;} else {l2-&amp;gt;next=mergeTwoLists(l1,l2-&amp;gt;next);return l2;} } };  力扣24.两两交换链表中的节点  给定一个链表，两两交换其中相邻的节点，并返回交换后的链表，题目要求不能只是单纯的改变节点内部的值，而需要实际的进行节点交换。所以这里我们就不好借助什么vector数组存放并交换数值位置最后直接一个一个用curr-&amp;gt;val==vec[i]进行更改了，这里我们得原地直接交换链表指针，可以采用迭代法和递归法。
+递归法于我来说还是那么的不好理解虽然代码很简洁，看起来就是不断地调用递归函数进行层层深入，每次调用函数有一个返回值，多次调用遇到终止条件就结束递归操作。
+迭代法可以先构造一个哑结点的下一个节点指向head,再让pre指向该哑结点，并且让函数循环的条件是pre-&amp;gt;next!=nullptr&amp;amp;&amp;amp;pre-&amp;gt;next-&amp;gt;next!=nullptr,在循环体内就是针对pre,pre-&amp;gt;next,pre-&amp;gt;next-&amp;gt;next进行链表指针交换，四个交换如下
+ListNode* start=pre-&amp;gt;next; ListNode* end=pre-&amp;gt;next-&amp;gt;nex pre-&amp;gt;next=start-&amp;gt;next; start-&amp;gt;next=end-&amp;gt;next; end-&amp;gt;next=start; pre=start; 递归代码</description>
+    </item>
     
     <item>
       <title>A1047</title>
